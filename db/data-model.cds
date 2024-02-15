@@ -8,6 +8,7 @@ entity SalesOrders {
                       on items.salesorder = $self;
 }
 
+
 entity SalesOrderItems {
   salesorder : Association to one SalesOrders;
   itemNo     : Integer;
