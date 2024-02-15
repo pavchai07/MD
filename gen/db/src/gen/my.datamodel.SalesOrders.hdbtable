@@ -1,0 +1,8 @@
+COLUMN TABLE my_datamodel_SalesOrders (
+  ID INTEGER NOT NULL,
+  description NVARCHAR(5000),
+  customerNo NVARCHAR(5000),
+  PRIMARY KEY(ID)
+) WITH ASSOCIATIONS (
+  MANY TO MANY JOIN my_datamodel_SalesOrderItems AS items ON (items.salesorder_ID = ID)
+)

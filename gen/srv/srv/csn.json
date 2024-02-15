@@ -1,0 +1,218 @@
+{
+  "namespace": "my.datamodel",
+  "definitions": {
+    "my.datamodel.SalesOrders": {
+      "kind": "entity",
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "description": {
+          "type": "cds.String"
+        },
+        "customerNo": {
+          "type": "cds.String"
+        },
+        "items": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "my.datamodel.SalesOrderItems",
+          "on": [
+            {
+              "ref": [
+                "items",
+                "salesorder"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "my.datamodel.SalesOrderItems": {
+      "kind": "entity",
+      "elements": {
+        "salesorder": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": 1
+          },
+          "target": "my.datamodel.SalesOrders",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "itemNo": {
+          "type": "cds.Integer"
+        },
+        "material": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "quantity": {
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 2
+        }
+      }
+    },
+    "CatalogService": {
+      "@source": "srv/cat-service.cds",
+      "kind": "service",
+      "@requires": "authenticated-user"
+    },
+    "CatalogService.SalesOrders": {
+      "kind": "entity",
+      "@UI.LineItem": [
+        {
+          "$Type": "UI.DataField",
+          "Label": "ID",
+          "Value": {
+            "=": "ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "description",
+          "Value": {
+            "=": "description"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "customerNo",
+          "Value": {
+            "=": "customerNo"
+          }
+        }
+      ],
+      "@UI.FieldGroup#GeneratedGroup1.$Type": "UI.FieldGroupType",
+      "@UI.FieldGroup#GeneratedGroup1.Data": [
+        {
+          "$Type": "UI.DataField",
+          "Label": "ID",
+          "Value": {
+            "=": "ID"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "description",
+          "Value": {
+            "=": "description"
+          }
+        },
+        {
+          "$Type": "UI.DataField",
+          "Label": "customerNo",
+          "Value": {
+            "=": "customerNo"
+          }
+        }
+      ],
+      "@UI.Facets": [
+        {
+          "$Type": "UI.ReferenceFacet",
+          "ID": "GeneratedFacet1",
+          "Label": "General Information",
+          "Target": "@UI.FieldGroup#GeneratedGroup1"
+        }
+      ],
+      "projection": {
+        "from": {
+          "ref": [
+            "my.datamodel.SalesOrders"
+          ]
+        }
+      },
+      "elements": {
+        "ID": {
+          "key": true,
+          "type": "cds.Integer"
+        },
+        "description": {
+          "type": "cds.String"
+        },
+        "customerNo": {
+          "type": "cds.String"
+        },
+        "items": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": "*"
+          },
+          "target": "CatalogService.SalesOrderItems",
+          "on": [
+            {
+              "ref": [
+                "items",
+                "salesorder"
+              ]
+            },
+            "=",
+            {
+              "ref": [
+                "$self"
+              ]
+            }
+          ]
+        }
+      }
+    },
+    "CatalogService.SalesOrderItems": {
+      "kind": "entity",
+      "projection": {
+        "from": {
+          "ref": [
+            "my.datamodel.SalesOrderItems"
+          ]
+        }
+      },
+      "elements": {
+        "salesorder": {
+          "type": "cds.Association",
+          "cardinality": {
+            "max": 1
+          },
+          "target": "CatalogService.SalesOrders",
+          "keys": [
+            {
+              "ref": [
+                "ID"
+              ]
+            }
+          ]
+        },
+        "itemNo": {
+          "type": "cds.Integer"
+        },
+        "material": {
+          "type": "cds.String",
+          "length": 10
+        },
+        "quantity": {
+          "type": "cds.Decimal",
+          "precision": 10,
+          "scale": 2
+        }
+      }
+    }
+  },
+  "meta": {
+    "creator": "CDS Compiler v4.6.2",
+    "flavor": "inferred"
+  },
+  "$version": "2.0"
+}

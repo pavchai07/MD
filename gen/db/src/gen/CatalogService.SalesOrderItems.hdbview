@@ -1,0 +1,9 @@
+VIEW CatalogService_SalesOrderItems AS SELECT
+  SalesOrderItems_0.salesorder_ID,
+  SalesOrderItems_0.itemNo,
+  SalesOrderItems_0.material,
+  SalesOrderItems_0.quantity
+FROM my_datamodel_SalesOrderItems AS SalesOrderItems_0
+WITH ASSOCIATIONS (
+  MANY TO ONE JOIN CatalogService_SalesOrders AS salesorder ON (salesorder.ID = salesorder_ID)
+)

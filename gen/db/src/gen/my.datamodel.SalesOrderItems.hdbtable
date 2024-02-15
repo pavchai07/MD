@@ -1,0 +1,8 @@
+COLUMN TABLE my_datamodel_SalesOrderItems (
+  salesorder_ID INTEGER,
+  itemNo INTEGER,
+  material NVARCHAR(10),
+  quantity DECIMAL(10, 2)
+) WITH ASSOCIATIONS (
+  MANY TO ONE JOIN my_datamodel_SalesOrders AS salesorder ON (salesorder.ID = salesorder_ID)
+)
